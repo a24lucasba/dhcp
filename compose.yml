@@ -1,21 +1,22 @@
 services:
-  kea:
+  ned:
     build: ./kea
-    container_name: kea
+    container_name: ned
+    hostname: ned
     networks:
       dhcp_lab:
-        ipv4_address: 192.168.130.2
+        ipv4_address: 192.168.10.10
     cap_add:
       - NET_ADMIN
     volumes:
-      - ./kea/kea-dhcp4.conf.json:/etc/kea/kea-dhcp4.conf
-  
+      - ./ned/dhcp4.json:/etc/kea/kea-dhcp4.conf
+      - ./ned/dhcp:/var/lib/kea
   cliente1:
     build: ./cliente
     container_name: client1
     networks:
       dhcp_lab:
-        ipv4_address: 192.168.130.3
+        ipv4_address: 192.168.10.3
         mac_address: 02:42:ac:11:00:10  # dirección HW fija
     cap_add:
       - NET_ADMIN
@@ -27,7 +28,27 @@ services:
 
     networks:
       dhcp_lab:
-        ipv4_address: 192.168.130.4
+        ipv4_address: 192.168.10.4
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "dhclient -v eth0 && sleep infinity"
+  cliente3:
+    build: ./cliente
+
+    networks:
+      dhcp_lab:
+        ipv4_address: 192.168.10.5
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "dhclient -v eth0 && sleep infinity"
+  cliente4:
+    build: ./cliente
+
+    networks:
+      dhcp_lab:
+        ipv4_address: 192.168.10.6
     cap_add:
       - NET_ADMIN
     command: >
@@ -38,4 +59,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.130.0/24
+        - subnet: 192.168.10.0/24
