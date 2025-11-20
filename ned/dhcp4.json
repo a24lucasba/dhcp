@@ -1,7 +1,7 @@
 {
     "Dhcp4": {
         "interfaces-config": {
-            "interfaces": [ "eth0" ],
+            "interfaces": [ "eth1" ],
             "dhcp-socket-type": "raw"
         },
         "lease-database": {
@@ -15,8 +15,24 @@
     {
         "id": 1,
         "pools": [
-        { "pool":  "192.168.10.30 - 192.168.10.32" } ,
-        { "pool":  "192.168.10.101 - 192.168.10.230" }
+        { 
+            "pool":  "192.168.10.30 - 192.168.10.32", 
+            "option-data": [
+            {
+                "name": "routers",
+                "data": "192.168.10.253"
+            }
+        ]
+        } ,
+        { 
+            "pool":  "192.168.10.101 - 192.168.10.230",
+            "option-data": [
+            {
+                "name": "routers",
+                "data": "192.168.10.254"
+            }
+        ]
+    }
         ],
         "subnet": "192.168.10.0/24"
     }
