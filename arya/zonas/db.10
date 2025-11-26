@@ -1,11 +1,12 @@
 $TTL 86400
-@       IN      SOA     arya.lannister.lan. admin.lannister.lan. (
+@       IN      SOA     arya.stark.lan. admin.stark.lan. (
                         2025011801 ; Serial
                         3600       ; Refresh
                         1800       ; Retry
                         604800     ; Expire
                         86400 )    ; Minimum
 
-@       IN      NS      arya.lannister.lan.
+@        IN      NS      arya.stark.lan.
 
-arya    IN      A       192.168.10.11
+; Servidor principal
+11      IN      PTR     arya.stark.lan.

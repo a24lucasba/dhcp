@@ -1,30 +1,29 @@
 services:
-  # arya:
-  #   build: ./dnsserver
-  #   container_name: arya
-  #   hostname: arya
-  #   networks:
-  #     dhcp_lab:
-  #       ipv4_address: 192.168.10.11
-  #   cap_add:
-  #     - NET_ADMIN
-  #   volumes:
-  #     - ./dnsserver/bind/named.conf.options:/etc/bind/named.conf.options
-  #     - ./arya/zonas/db.lannister.lan:/etc/bind/db.lannister.lan
+  arya:
+    build: ./dnsserver
+    hostname: arya
+    networks:
+      rede_stark:
+        ipv4_address: 192.168.10.11
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./arya/named.conf.local:/etc/bind/named.conf.local
+      - ./arya/named.conf.options:/etc/bind/named.conf.options
+      - ./arya/zonas:/var/cache/bind/zonas
   ned:
     build: ./kea
-    container_name: ned
     hostname: ned
     networks:
       rede_stark:
         ipv4_address: 192.168.10.10
+        interface_name: eth1
     cap_add:
       - NET_ADMIN
     volumes:
       - ./ned/dhcp4.json:/etc/kea/kea-dhcp4.conf
   router:
     build: ./router
-    container_name: router
     hostname: router
     cap_add:
       - NET_ADMIN
@@ -43,17 +42,19 @@ services:
       rede_targaryen:  
         ipv4_address: 192.168.12.254
         interface_name: eth3
-  # cliente1:
-  #   build: ./cliente
-  #   container_name: client1
-  #   networks:
-  #     dhcp_lab:
-  #       ipv4_address: 192.168.10.3
-  #       mac_address: 02:42:ac:11:00:10  # dirección HW fija
-  #   cap_add:
-  #     - NET_ADMIN
-  #   command: >
-  #     sh -c "dhclient -v eth0 && sleep infinity"
+  bran:
+    build: ./cliente
+    hostname: bran
+    depends_on:
+      - ned
+    networks:
+      rede_stark:
+        ipv4_address: 192.168.10.20
+        mac_address: 00:11:22:33:44:55  # dirección HW fija
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "dhclient -v eth0 && sleep infinity"
 
 networks:
   rede_stark:

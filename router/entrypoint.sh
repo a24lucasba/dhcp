@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo 1 | tee /proc/sys/net/ipv4/ip_forward
-
 nft list tables | grep -q '^table ip nat$' || nft add table ip nat
 
 # Crear chain POSTROUTING si no existe

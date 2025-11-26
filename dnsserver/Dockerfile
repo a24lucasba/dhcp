@@ -10,8 +10,6 @@ RUN apt update && apt install -y \
     bind9-doc \
     && rm -rf /var/lib/apt/lists/*
 
-COPY bind/named.conf.options /etc/bind/named.conf.options
-
 RUN mkdir -p /dns
 COPY entrypoint.sh /dns
 RUN chmod a+x /dns/entrypoint.sh

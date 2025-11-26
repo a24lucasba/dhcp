@@ -11,6 +11,10 @@
         "lfc-interval": 1800,
         "max-row-errors": 100
     },
+    "valid-lifetime": 600,
+    "rebind-timer": 500,
+    "authoritative": true,
+    "renew-timer": 300,
     "subnet4": [
     {
         "id": 1,
@@ -22,8 +26,8 @@
                 "name": "routers",
                 "data": "192.168.10.253"
             }
-        ]
-        } ,
+            ]
+        },
         { 
             "pool":  "192.168.10.101 - 192.168.10.230",
             "option-data": [
@@ -31,11 +35,95 @@
                 "name": "routers",
                 "data": "192.168.10.254"
             }
-        ]
-    }
+            ]
+        }
+        ],
+        "reservations": [ 
+            {
+                "hw-address": "00:11:22:33:44:55",
+                "ip-address": "192.168.10.31",
+                "option-data": [
+                {
+                    "name": "routers",
+                    "data": "192.168.10.252"
+                }
+                ]
+            }
         ],
         "subnet": "192.168.10.0/24"
-    }
+    },
+    {
+        "id": 2,
+        "pools": [
+        { 
+            "pool":  "192.168.11.30 - 192.168.11.132"
+        }
+        ],
+        "subnet": "192.168.11.0/24",
+        "option-data": [
+            {
+                "name": "routers",
+                "data": "192.168.11.254"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "pools": [
+          {
+            "pool": "192.168.12.30 - 192.168.12.132"
+          }
+        ],
+        "subnet": "192.168.12.0/24",
+        "option-data": [
+          {
+            "name": "routers",
+            "data": "192.168.12.254"
+          }
+        ]
+      }
     ]
+    },
+    "DhcpDdns": {
+        "ip-address": "192.168.10.11",
+        "port": 53001,
+        "dns-server-timeout": 500,
+        "ncr-protocol": "UDP",
+        "ncr-format": "JSON",
+        "tsig-keys": [ 
+            {
+                "name": "chave-xogo-de-tronos",
+                "algorithm": "hmac-sha256",
+                "secret": "xnlEkO6LhK925TsbExYC7pY6i2s4KVOpLF4QDjtw1wo="            
+            }
+        ],
+        "forward-ddns": {
+            "ddns-domains": [ 
+                {
+                    "name": "db.lannister.aln",
+                    "key-name": "chave-xogo-de-tronos",
+                    "dns-servers": [
+                        {
+                            "ip-address": "192.168.10.11",
+                            "port": 53
+                        }
+                    ]
+                }
+            ]
+        },
+        "reverse-ddns": {
+            "ddns-domains": [ 
+                {
+                    "name": "2.0.192.in-addr.arpa.",
+                    "key-name": "chave-xogo-de-tronos",
+                    "dns-servers": [
+                        {
+                            "ip-address": "172.88.99.10",
+                            "port": 53
+                        }
+                    ]
+                }
+            ]
+        }
     }
-} 
+}

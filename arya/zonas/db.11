@@ -6,6 +6,5 @@ $TTL 86400
                         604800     ; Expire
                         86400 )    ; Minimum
 
-@       IN      NS      arya.lannister.lan.
+@        IN      NS      arya.lannister.lan.
 
-arya    IN      A       192.168.10.11
