@@ -3,8 +3,8 @@
 //
 
 key "chave-xogo-de-tronos" {
-        algorithm hmac-sha256;
-        secret "xnlEkO6LhK925TsbExYC7pY6i2s4KVOpLF4QDjtw1wo=";
+    algorithm hmac-sha256;
+    secret "xnlEkO6LhK925TsbExYC7pY6i2s4KVOpLF4QDjtw1wo=";
 };
 
 zone "stark.lan" {

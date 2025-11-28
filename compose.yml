@@ -20,8 +20,11 @@ services:
         interface_name: eth1
     cap_add:
       - NET_ADMIN
+    command: "bash -d /sbin/entrypoint.sh"
     volumes:
-      - ./ned/dhcp4.json:/etc/kea/kea-dhcp4.conf
+      - ./ned/entrypoint.sh:/sbin/entrypoint.sh
+      - ./ned/dhcp4.json:/etc/kea/dhcp4.conf
+      - ./ned/ddns.json:/etc/kea/ddns.conf
   router:
     build: ./router
     hostname: router
@@ -47,15 +50,140 @@ services:
     hostname: bran
     depends_on:
       - ned
+      - arya
     networks:
       rede_stark:
-        ipv4_address: 192.168.10.20
         mac_address: 00:11:22:33:44:55  # dirección HW fija
     cap_add:
       - NET_ADMIN
     command: >
-      sh -c "dhclient -v eth0 && sleep infinity"
-
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente1:
+    build: ./cliente
+    hostname: cliente1
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_stark:
+        mac_address: 02:42:0a:00:00:01
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente2:
+    build: ./cliente
+    hostname: cliente2
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_stark:
+        mac_address: 02:42:0a:00:00:02
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente3:
+    build: ./cliente
+    hostname: cliente3
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_stark:
+        mac_address: 02:42:0a:00:00:03
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente4:
+    build: ./cliente
+    hostname: cliente4
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_stark:
+        mac_address: 02:42:0a:00:00:04
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente5:
+    build: ./cliente
+    hostname: cliente5
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_stark:
+        mac_address: 02:42:0a:00:00:05
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente6:
+    build: ./cliente
+    hostname: cliente6
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_stark:
+        mac_address: 02:42:0a:00:00:06
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente7:
+    build: ./cliente
+    hostname: cliente7
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_stark:
+        mac_address: 02:42:0a:00:00:07
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente10:
+    build: ./cliente
+    hostname: cliente10
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_lannister:
+        mac_address: 02:42:0b:00:00:0a
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+  
+  cliente20:
+    build: ./cliente
+    hostname: cliente20
+    depends_on:
+      - ned
+      - arya
+    networks:
+      rede_targaryen:
+        mac_address: 02:42:0c:00:00:14
+    cap_add:
+      - NET_ADMIN
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
 networks:
   rede_stark:
     driver: bridge
