@@ -12,10 +12,25 @@
                 "secret": "xnlEkO6LhK925TsbExYC7pY6i2s4KVOpLF4QDjtw1wo="
             }
         ],
+        "loggers": [
+            {
+                "name": "kea-dhcp-ddns",
+                "severity": "DEBUG",
+                "output-options": [
+                    {
+                        "output": "/var/log/kea/kea-ddns-debug.log",
+                        "maxver": 8,
+                        "maxsize": 204800,
+                        "flush": true,
+                        "pattern": "%D{%Y-%m-%d %H:%M:%S.%q} %-5p [%c/%i.%t] %m\n"
+                    }
+                ]
+            }
+        ],
         "forward-ddns": {
             "ddns-domains": [
                 {
-                    "name": "db.stark.lan.",
+                    "name": "stark.lan.",
                     "key-name": "chave-xogo-de-tronos",
                     "dns-servers": [
                         {
@@ -24,7 +39,7 @@
                     ]
                 },
                 {
-                    "name": "db.lannister.lan.",
+                    "name": "lannister.lan.",
                     "key-name": "chave-xogo-de-tronos",
                     "dns-servers": [
                         {
@@ -33,7 +48,7 @@
                     ]
                 },
                 {
-                    "name": "db.targaryen.lan.",
+                    "name": "targaryen.lan.",
                     "key-name": "chave-xogo-de-tronos",
                     "dns-servers": [
                         {

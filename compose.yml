@@ -26,6 +26,7 @@ services:
       - ./ned/dhcp4.json:/etc/kea/dhcp4.conf
       - ./ned/ddns.json:/etc/kea/ddns.conf
       - ./ned/dhcp/:/var/lib/kea/
+      - ./ned/logs/:/var/log/kea/
   router:
     build: ./router
     hostname: router
