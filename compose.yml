@@ -20,11 +20,12 @@ services:
         interface_name: eth1
     cap_add:
       - NET_ADMIN
-    command: "bash -d /sbin/entrypoint.sh"
+    command: "bash -c /sbin/entrypoint.sh"
     volumes:
       - ./ned/entrypoint.sh:/sbin/entrypoint.sh
       - ./ned/dhcp4.json:/etc/kea/dhcp4.conf
       - ./ned/ddns.json:/etc/kea/ddns.conf
+      - ./ned/dhcp/:/var/lib/kea/
   router:
     build: ./router
     hostname: router
